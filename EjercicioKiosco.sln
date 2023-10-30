@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EjercicioKiosco", "EjercicioKiosco.csproj", "{BB7FDD4C-7630-456F-81CE-4700A9358910}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAOProducto", "..\DAOProducto\DAOProducto.csproj", "{820699F1-7557-4E27-AB26-1D6112AAAAD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB7FDD4C-7630-456F-81CE-4700A9358910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7FDD4C-7630-456F-81CE-4700A9358910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7FDD4C-7630-456F-81CE-4700A9358910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7FDD4C-7630-456F-81CE-4700A9358910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820699F1-7557-4E27-AB26-1D6112AAAAD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820699F1-7557-4E27-AB26-1D6112AAAAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820699F1-7557-4E27-AB26-1D6112AAAAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820699F1-7557-4E27-AB26-1D6112AAAAD7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CBE129E6-81DE-4219-BC20-878553B42537}
+	EndGlobalSection
+EndGlobal
