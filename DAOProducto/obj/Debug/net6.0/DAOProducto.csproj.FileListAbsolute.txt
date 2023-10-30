@@ -1,0 +1,12 @@
+C:\Users\Antonio\source\repos\DAOProducto\bin\Debug\net6.0\DAOProducto.deps.json
+C:\Users\Antonio\source\repos\DAOProducto\bin\Debug\net6.0\DAOProducto.dll
+C:\Users\Antonio\source\repos\DAOProducto\bin\Debug\net6.0\DAOProducto.pdb
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\DAOProducto.csproj.AssemblyReference.cache
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\DAOProducto.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\DAOProducto.AssemblyInfoInputs.cache
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\DAOProducto.AssemblyInfo.cs
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\DAOProducto.csproj.CoreCompileInputs.cache
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\DAOProducto.dll
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\refint\DAOProducto.dll
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\DAOProducto.pdb
+C:\Users\Antonio\source\repos\DAOProducto\obj\Debug\net6.0\ref\DAOProducto.dll
