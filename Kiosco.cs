@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EjercicioKiosco.Exceptions;
+
 
 namespace EjercicioKiosco
 {
@@ -11,78 +13,84 @@ namespace EjercicioKiosco
     {
         public static Kiosco instance => new Kiosco();
         public List<Producto> productos { get; set; }
-        private Kiosco() 
+        private Kiosco()
         {
             this.productos = productos;
         }
 
-        public string Comprar(Producto producto,Usuario usuario) 
+        public void Comprar(Producto producto, Usuario usuario, object bloqueador)//cambie string por void
         {
             DAOProductos BDProductos = new DAOProductos();
 
-            if(!EnStock(producto.Stock))
+            if (!EnStock(producto.Stock))
             {
-                return "No hay en stock";
+                throw new CompraRechazadaException("No hay en stock");
             }
-                if (producto.ParaMayorEdad=="True")
+            if (producto.ParaMayorEdad == "True")
+            {
+                if (!MayorEdad(usuario.Edad1))
                 {
-                    if (!MayorEdad(usuario.Edad1))
+                    throw new CompraRechazadaException("No se realiza la compra por ser menor de edad");
+                }
+                if (producto.Alcohol == "True")
+                {
+                    if (EnVeda())
                     {
-                        return "No se realiza la compra por ser menor de edad";
+                        throw new CompraRechazadaException("compra no realizada por veda electoral");
                     }
-                    if(producto.Alcohol=="True") 
+                    else
                     {
-                            if (EnVeda())
-                            {
-                            return "compra no realizada por veda electoral";
-                            }
-                            else
-                            {
+                        lock (bloqueador)
+                        {
                             BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
                             producto = BDProductos.ObtenerProducto(producto.Id);
-                            return "Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock;
-                            }
-                    }
-                    else 
-                    {
-                            
-                            BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
-                            producto = BDProductos.ObtenerProducto(producto.Id);
-                            return "Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock;
+                            Console.WriteLine("Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock);
+                        }
                     }
                 }
                 else
                 {
+                    lock (bloqueador)
+                    {
                         BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
                         producto = BDProductos.ObtenerProducto(producto.Id);
-                        return "Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock;
+                        Console.WriteLine("Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock);
+                    }
                 }
-
-        } 
+            }
+            else
+            {
+                lock (bloqueador)
+                {
+                    BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
+                    producto = BDProductos.ObtenerProducto(producto.Id);
+                    Console.WriteLine("Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock);
+                }
+            }
+        }
 
         public bool EnVeda()
         {
-            return true;
+          //  return true;
+            return false;
         }
 
         public bool MayorEdad(int edad)
         {
-            if (edad >= 18) 
-            {  
+            if (edad >= 18)
+            {
                 return true;
             }
-            else 
+            else
             {
                 return false;
             }
         }
 
-        public bool EnStock(int stock) 
+        public bool EnStock(int stock)
         {
             if (stock > 0) { return true; }
             else { return false; }
         }
-
-
     }
 }
