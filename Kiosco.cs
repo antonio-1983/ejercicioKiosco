@@ -18,61 +18,66 @@ namespace EjercicioKiosco
             this.productos = productos;
         }
 
-        public void Comprar(Producto producto, Usuario usuario, object bloqueador)//cambie string por void
+        public void Comprar(Producto producto, Usuario usuario, object bloqueador)//cambie string por void 
         {
             DAOProductos BDProductos = new DAOProductos();
-
-            if (!EnStock(producto.Stock))
+            try
             {
-                throw new CompraRechazadaException("No hay en stock");
-            }
-            if (producto.ParaMayorEdad == "True")
-            {
-                if (!MayorEdad(usuario.Edad1))
+                if (!EnStock(producto.Stock))
                 {
-                    throw new CompraRechazadaException("No se realiza la compra por ser menor de edad");
+                    throw new CompraRechazadaException("No hay en stock del producto "+producto.Nombre+" para vender al cliente "+usuario.Nombre1);
                 }
-                if (producto.Alcohol == "True")
+                if ((producto.ParaMayorEdad) && !MayorEdad(usuario.Edad1))
                 {
-                    if (EnVeda())
-                    {
-                        throw new CompraRechazadaException("compra no realizada por veda electoral");
-                    }
-                    else
-                    {
-                        lock (bloqueador)
-                        {
-                            BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
-                            producto = BDProductos.ObtenerProducto(producto.Id);
-                            Console.WriteLine("Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock);
-                        }
-                    }
+                    throw new CompraRechazadaException("No se realiza la compra a "+usuario.Nombre1+" por ser menor de edad");
                 }
-                else
+                if ((producto.Alcohol) && EnVeda())
                 {
-                    lock (bloqueador)
-                    {
-                        BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
-                        producto = BDProductos.ObtenerProducto(producto.Id);
-                        Console.WriteLine("Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock);
-                    }
+                    throw new CompraRechazadaException("No se realiza la compra a "+usuario.Nombre1 +" por estar en veda electoral");
                 }
             }
-            else
+            catch (CompraRechazadaException e)
             {
                 lock (bloqueador)
                 {
-                    BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
-                    producto = BDProductos.ObtenerProducto(producto.Id);
-                    Console.WriteLine("Compra realizada , stock del producto " + producto.Nombre + ": " + producto.Stock);
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(" ");
+                    return;
                 }
+                
+            }
+
+            lock (bloqueador)
+                {
+                producto = BDProductos.ObtenerProducto(producto.Id);
+                BDProductos.ActualizarProducto(producto.Id, producto.Stock - 1);
+                producto = BDProductos.ObtenerProducto(producto.Id);
+                Console.WriteLine("Compra realizada por " + usuario.Nombre1 + ", stock del producto " + producto.Nombre + ": " + producto.Stock);
+                Console.WriteLine(" ");
+                }
+            
+        }
+
+        public async Task ComprarAsync(Producto producto, Usuario usuario, object bloqueador)
+        {
+           
+            try
+            {
+                await Task.Run(() => Comprar(producto, usuario, bloqueador));
+            }
+            catch (CompraRechazadaException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
         }
 
+
         public bool EnVeda()
         {
-          //  return true;
-            return false;
+          // return true;
+           return false;
         }
 
         public bool MayorEdad(int edad)
